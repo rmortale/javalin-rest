@@ -4,8 +4,7 @@ COPY src /tmp/src/
 WORKDIR /tmp/
 RUN mvn package
 
-FROM openjdk:8-jre-alpine
+FROM fabric8/java-alpine-openjdk8-jdk
 EXPOSE 7000
-COPY --from=MAVEN_TOOL_CHAIN /tmp/target/javalin-rest-1.0.jar app.jar
-ENTRYPOINT ["java", "-jar", "app.jar"]
-
+COPY --from=MAVEN_TOOL_CHAIN /tmp/target/javalin-rest-1.0.jar /deployments/app.jar
+ENV AB_OFF=disabled
