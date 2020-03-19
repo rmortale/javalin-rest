@@ -1,4 +1,6 @@
-aws2 ecr create-repository --repository-name javalin-app --region eu-west-1
+aws2 ecr create-repository --repository-name javalin-repo --region eu-west-1
+
+aws2 ecs register-task-definition --region eu-west-1 --cli-input-json file://httpd-td.json
 
 aws2 ecs register-task-definition --region eu-west-1 --cli-input-json file://taskdef.json
 
