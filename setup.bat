@@ -6,6 +6,8 @@ aws2 ecs register-task-definition --region eu-west-1 --cli-input-json file://tas
 
 aws2 ecs create-cluster --region eu-west-1 --capacity-providers FARGATE FARGATE_SPOT --cluster-name fargate
 
+aws2 ecs create-cluster --region eu-west-1 --cluster-name fargate
+
 aws2 ecs create-service --region eu-west-1 --service-name javalin-service ^
      --task-definition javalin-app-td:10 --desired-count 1 ^
      --launch-type "FARGATE" ^
