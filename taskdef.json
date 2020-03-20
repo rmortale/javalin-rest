@@ -12,7 +12,7 @@
             },
             "portMappings": [
                 {
-                    "hostPort": 7000,
+                    "hostPort": 80,
                     "protocol": "tcp",
                     "containerPort": 7000
                 }
