@@ -1,0 +1,21 @@
+on: push
+
+name: Build and deploy to docker hub
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Push to docker hub
+      uses: docker/build-push-action@v1
+      with:
+        username: ${{ secrets.DOCKERHUB_USER }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+        repository: rmortale/javalin-rest
+        tag_with_ref: true
+        tag_with_sha: true
