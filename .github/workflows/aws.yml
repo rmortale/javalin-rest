@@ -23,7 +23,10 @@
 #    See the documentation for each action used below for the recommended IAM policies for this IAM user,
 #    and best practices on handling the access key credentials.
 
-on: push
+on: 
+  push:
+    branches:
+        - tutorial
 
 name: Deploy to Amazon ECS
 
@@ -41,7 +44,7 @@ jobs:
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: eu-west-1
+        aws-region: us-east-2
 
     - name: Login to Amazon ECR
       id: login-ecr
@@ -51,7 +54,7 @@ jobs:
       id: build-image
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        ECR_REPOSITORY: javalin-repo
+        ECR_REPOSITORY: test
         IMAGE_TAG: ${{ github.sha }}
       run: |
         # Build a docker container and
@@ -66,13 +69,13 @@ jobs:
       uses: aws-actions/amazon-ecs-render-task-definition@v1
       with:
         task-definition: taskdef.json
-        container-name: javalin-app
+        container-name: test
         image: ${{ steps.build-image.outputs.image }}
 
     - name: Deploy Amazon ECS task definition
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
       with:
         task-definition: ${{ steps.task-def.outputs.task-definition }}
-        service: javalin-service
-        cluster: fargate
+        service: test
+        cluster: test
         wait-for-service-stability: true
